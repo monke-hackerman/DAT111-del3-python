@@ -2,7 +2,7 @@
 import matplotlib.pyplot as plt
 from matplotlib.widgets import RadioButtons
 import matplotlib.image as mpimg
-from Python.semster.Semester26_Model import  predict_price
+from Semester26_Model import  predict_price
 
 #draws the bergen map
 def draw_the_map():
