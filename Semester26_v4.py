@@ -40,6 +40,7 @@ def draw_the_map():
     ax_history.bar(m2list, price_m2, color=cursor_color, width=5)
     ax_history.legend(["pris per m2"])
 
+    #apply changes to existingmap
     plt.draw()
 
 #activates on click of the map
@@ -108,8 +109,11 @@ ax_map.margins(x=0.01, y=0.01)  # Adjust x and y margins
 img = mpimg.imread('Semester26_Bergen.jpg')
 ax_map.imshow(img, aspect='auto')
 
+#draws the map with defualts for first run
 draw_the_map()
 plt.connect('button_press_event', on_click_map)
+
+#opens the program, and waita on input
 plt.show()
 
 
