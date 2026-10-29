@@ -3,7 +3,7 @@ from geopy.geocoders import Nominatim
 import os
 
 # Initialize geolocator (user_agent can be any custom string for your app)
-geolocator = Nominatim(user_agent="student_assignment_project")
+geolocator = Nominatim(user_agent="Semester_oppgave_DAT111")
 
 def latlon_to_xy(lat, lon):
     # Definer ytterpunktene (Bounding Box) fra hjørnene
