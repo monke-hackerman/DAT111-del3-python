@@ -26,15 +26,28 @@ def draw_the_map():
     # m2_price = totalpris / 1000 rounded
     # cursor_color decides color displayed on text and marker
     if m2_price >= 70.00:
-        cursor_color = 'red'
+        tekst_color = 'orangered'
     elif m2_price >= 55.00:
-        cursor_color = 'yellow'
+        tekst_color = 'yellow'
     else:
-        cursor_color = 'green'
+        tekst_color = 'lime'
+
+    #find better colors later
+    if house_type == 1:
+        cursor_color = 'blue'
+    elif house_type == 2:
+        cursor_color = 'darkviolet'
+    else:
+        cursor_color = 'indigo'
 
     #sets marker on x, y and color
     ax_map.scatter(x, y, marker='+', c=cursor_color, s=200)
-    ax_map.text(x + 3, y - 1, price, color=cursor_color, fontsize=15)
+    ax_map.text(x + 3, y - 1, price, color=tekst_color, fontsize=15,  bbox=dict(
+        facecolor='black',      
+        alpha=0.5,            
+        edgecolor='none',     
+        boxstyle='round,pad=0.2'
+    ))
     ax_history.cla()
     #makes the chart
     ax_history.bar(m2list, price_m2, color=cursor_color, width=5)
