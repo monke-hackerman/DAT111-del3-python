@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.widgets import RadioButtons
 import matplotlib.image as mpimg
 from Semester26_Model import  predict_price
+import matplotlib.patheffects as pe   
 
 #draws the bergen map
 def draw_the_map():
@@ -22,23 +23,44 @@ def draw_the_map():
 
     m2list = [50,100,150,200]
     price_m2 = [predict_price(x, y,  _m2, house_type, standard_type)/_m2 for _m2 in m2list]
+    #tidligere fargekode(beholder,hvis noe skjer)
+        # m2_price = totalpris / 1000 rounded
+        # cursor_color decides color displayed on text and marker
+        #if m2_price >= 70.00:
+            #cursor_color = 'red'
+        #elif m2_price >= 55.00:
+            #cursor_color = 'yellow'
+        #else:
+            #cursor_color = 'green'
 
-    # m2_price = totalpris / 1000 rounded
-    # cursor_color decides color displayed on text and marker
-    if m2_price >= 70.00:
-        cursor_color = 'red'
-    elif m2_price >= 55.00:
-        cursor_color = 'yellow'
-    else:
-        cursor_color = 'green'
+        #sets marker on x, y and color
+        #ax_map.scatter(x, y, marker='+', c=cursor_color, s=200)
+        #ax_map.text(x + 3, y - 1, price, color=cursor_color, fontsize=15)
+    #slutt av tidligere kode
 
-    #sets marker on x, y and color
-    ax_map.scatter(x, y, marker='+', c=cursor_color, s=200)
-    ax_map.text(x + 3, y - 1, price, color=cursor_color, fontsize=15)
+    #farge for chart
+    bar_color = standard_farge[standard_type]
+    ax_map.scatter(x, y, marker='+', c=bar_color, s=200)
+    ax_map.text(x + 3, y - 1, price, color=bar_color, fontsize=15)
+
     ax_history.cla()
-    #makes the chart
-    ax_history.bar(m2list, price_m2, color=cursor_color, width=5)
-    ax_history.legend(["pris per m2"])
+    #lager chart
+    ax_history.bar(m2list, price_m2, color=bar_color, width=5)
+    
+    #pris per m2 for huspå100 m2
+    ref_price = price_m2[m2list.index(100)]
+    ax_history.axhline(ref_price, color='black', linestyle='--', linewidth=1, label=f"100 m2: {round(ref_price * 1000, -2):,.0f}")
+
+    #grid, for oppgaven
+    ax_history.set_axisbelow(True)
+    ax_history.grid(axis='y', linestyle=':', alpha=0.6)
+    
+
+    ax_history.set_xticks(m2list)
+    ax_history.set_xlabel("størrelse (m2)")
+    ax_history.set_ylabel("pris per m2")
+     
+    ax_history.legend()
 
     #apply changes to existingmap
     plt.draw()
@@ -80,6 +102,12 @@ standard_types = {
     'God': 2,
     'Meget God': 3,
     'Luksus': 4
+}
+standard_farge = {
+    1:'red',
+    2:'gold',
+    3:'green',
+    4:'blue',
 }
 
 #Set the defualt types for first run
