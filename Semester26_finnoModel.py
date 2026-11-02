@@ -2,12 +2,9 @@ import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 import os
 
-# Path to training data
-file_path = "output.csv"
-
 # Initialize and train finno model
-if os.path.exists(file_path) and os.path.getsize(file_path) > 0:
-    df = pd.read_csv(file_path).copy()
+if os.path.exists("output.csv"):
+    df = pd.read_csv("output.csv").copy()
     
     # Filter out extreme outliers (houseing market be like) if necessary
     df = df[df['m2'] > 0]
