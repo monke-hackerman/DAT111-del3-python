@@ -2,7 +2,8 @@
 import matplotlib.pyplot as plt
 from matplotlib.widgets import RadioButtons
 import matplotlib.image as mpimg
-from Semester26_Model import  predict_price
+from Semester26_Model import  predict_price as predict_price_mod1
+from Semester26_finnoModel import predict_price as predict_price_mod2
 
 #draws the bergen map
 def draw_the_map():
@@ -16,12 +17,16 @@ def draw_the_map():
     print(f"marked_point: {marked_point}")
     if marked_point == (0, 0):
         return
-
-    m2_price:float = predict_price(x, y, m2, house_type, standard_type) / m2
-    price = f"{round(m2_price * 1000, -2):,.0f}"
-
-    m2list = [50,100,150,200]
-    price_m2 = [predict_price(x, y,  _m2, house_type, standard_type)/_m2 for _m2 in m2list]
+    if mod_type == 1:
+        m2_price:float = predict_price_mod1(x, y, m2, house_type, standard_type) / m2
+        price = f"{round(m2_price * 1000, -2):,.0f}"
+        m2list = [50,100,150,200]
+        price_m2 = [predict_price_mod1(x, y,  _m2, house_type, standard_type)/_m2 for _m2 in m2list]
+    elif mod_type == 2:
+        m2_price:float = predict_price_mod2(x, y, m2, house_type, standard_type) / m2
+        price = f"{round(m2_price * 1000, -2):,.0f}"
+        m2list = [50,100,150,200]
+        price_m2 = [predict_price_mod2(x, y,  _m2, house_type, standard_type)/_m2 for _m2 in m2list]
 
     # m2_price = totalpris / 1000 rounded
     # cursor_color decides color displayed on text and marker
@@ -80,6 +85,13 @@ def on_standard(key):
     standard_type = standard_types[key]
     draw_the_map()
 
+#changes the model type form mod1, mod2
+def on_mod_type(key):
+    global mod_type
+    mod_type = mod_types[key]
+    print(f"Mod type changed to: {mod_type}")
+    draw_the_map()
+
 #definde housetypes, enebloig as the number 1, rekke as 2 and leilhet as 3
 house_types = {
     'Enebolig': 1,
@@ -95,9 +107,17 @@ standard_types = {
     'Luksus': 4
 }
 
+#defines modtypes dictionary
+mod_types = {
+    'mod1': 1,
+    'mod2': 2
+}
+
 #Set the defualt types for first run
 house_type = 1
 standard_type = 1
+mod_type = 1
+mod_type = 1
 m2 = 100
 marked_point = (43,57)
 
@@ -112,10 +132,17 @@ ax_history = fig.add_axes((0.05, 0.05, 0.30, .50))
 ax_radio_house_type.set_facecolor('lightgray')
 ax_radio_standard.set_facecolor('lightgray')
 
+# Added axis for mod buttons at the top right
+ax_radio_mod = fig.add_axes((0.75, 0.88, 0.15, 0.08))
+ax_radio_mod.set_facecolor('lightgray')
+
 radio_button_category = RadioButtons(ax_radio_house_type, list(house_types.keys()))
 radio_button_standard = RadioButtons(ax_radio_standard, list(standard_types.keys()))
+radio_button_mod = RadioButtons(ax_radio_mod, list(mod_types.keys()))
+
 radio_button_category.on_clicked(on_house_type)
 radio_button_standard.on_clicked(on_standard)
+radio_button_mod.on_clicked(on_mod_type)
 
 fig.subplots_adjust(left=0, right=1, top=1, bottom=0) # Adjust the figure to fit the image
 ax_map.margins(x=0.01, y=0.01)  # Adjust x and y margins
@@ -128,5 +155,3 @@ plt.connect('button_press_event', on_click_map)
 
 #opens the program, and waita on input
 plt.show()
-
-
