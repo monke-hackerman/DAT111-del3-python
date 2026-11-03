@@ -5,13 +5,13 @@ import matplotlib.image as mpimg
 from Semester26_Model import  predict_price as predict_price_mod1
 from Semester26_finnoModel import predict_price as predict_price_mod2
 
-#draws the bergen map
+# draws the bergen map
 def draw_the_map():
-    #displays image, and cla clears?
+    # displays image, and cla clears?
     ax_map.cla()
     ax_map.imshow(img, extent=(0, 100, 0, 100), aspect='auto')
 
-    #sets x,y as the marked point
+    # sets x,y as the marked point
     x,y = marked_point
 
     print(f"marked_point: {marked_point}")
@@ -29,7 +29,8 @@ def draw_the_map():
         price_m2 = [predict_price_mod2(x, y,  _m2, house_type, standard_type)/_m2 for _m2 in m2list]
 
     # m2_price = totalpris / 1000 rounded
-    # cursor_color decides color displayed on text and marker
+    # cursor_color decides color displayed on marker
+    # tekst_color decides clor displayed by tekst
     if m2_price >= 70.00:
         tekst_color = 'orangered'
     elif m2_price >= 55.00:
@@ -37,7 +38,7 @@ def draw_the_map():
     else:
         tekst_color = 'lime'
 
-    #find better colors later
+    # Find better colors later
     if house_type == 1:
         cursor_color = 'blue'
     elif house_type == 2:
@@ -45,7 +46,7 @@ def draw_the_map():
     else:
         cursor_color = 'indigo'
 
-    #sets marker on x, y and color
+    # Sets marker on x, y and color
     ax_map.scatter(x, y, marker='+', c=cursor_color, s=200)
     ax_map.text(x + 3, y - 1, price, color=tekst_color, fontsize=15,  bbox=dict(
         facecolor='black',      
@@ -54,14 +55,15 @@ def draw_the_map():
         boxstyle='round,pad=0.2'
     ))
     ax_history.cla()
-    #makes the chart
+
+    # Makes the chart
     ax_history.bar(m2list, price_m2, color=cursor_color, width=5)
     ax_history.legend(["pris per m2"])
 
-    #apply changes to existingmap
+    # Apply changes to existingmap
     plt.draw()
 
-#activates on click of the map
+# Activates on click of the map
 def on_click_map(event) :
     global marked_point
     #if click is off the map it wont register
@@ -73,33 +75,33 @@ def on_click_map(event) :
     draw_the_map()
     return
 
-#changes house type form enebolig, Rekke, Leiglighet
+# Changes house type form: Enebolig, Rekke, Leiglighet
 def on_house_type(key):
     global house_type
     house_type = house_types[key]
     draw_the_map()
 
-#changes the standerds form: Dårlig, God, Meget god, Luksus
+# Changes the standerds form: Dårlig, God, Meget god, Luksus
 def on_standard(key):
     global standard_type
     standard_type = standard_types[key]
     draw_the_map()
 
-#changes the model type form mod1, mod2
+# Changes the model type form: mod1 (the og), mod2 (Finno model)
 def on_mod_type(key):
     global mod_type
     mod_type = mod_types[key]
     print(f"Mod type changed to: {mod_type}")
     draw_the_map()
 
-#definde housetypes, enebloig as the number 1, rekke as 2 and leilhet as 3
+# Definde housetypes, Enebloig as the number 1, Rekke as 2 and Leilhet as 3
 house_types = {
     'Enebolig': 1,
     'Rekke': 2,
     'Leilighet': 3
 }
 
-#defines standertypes as numbers also
+# Defines standertypes as numbers 1-4 also
 standard_types = {
     'Dårlig': 1,
     'God': 2,
@@ -107,13 +109,13 @@ standard_types = {
     'Luksus': 4
 }
 
-#defines modtypes dictionary
+# Defines the diffrent model types as numbers 1-2
 mod_types = {
     'mod1': 1,
     'mod2': 2
 }
 
-#Set the defualt types for first run
+# Set the defualt types for first run
 house_type = 1
 standard_type = 1
 mod_type = 1
@@ -132,7 +134,7 @@ ax_history = fig.add_axes((0.05, 0.05, 0.30, .50))
 ax_radio_house_type.set_facecolor('lightgray')
 ax_radio_standard.set_facecolor('lightgray')
 
-# Added axis for mod buttons at the top right
+# Added axis for model buttons at the top right
 ax_radio_mod = fig.add_axes((0.75, 0.88, 0.15, 0.08))
 ax_radio_mod.set_facecolor('lightgray')
 
