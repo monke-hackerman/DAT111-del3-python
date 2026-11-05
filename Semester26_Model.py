@@ -28,8 +28,8 @@ def build_and_train_model():
     l_pred:list[int] = y_pred.tolist()
     for i in range(0, min(len(l_test),10)):
         print(f"Price: {l_test[i]:>10,.0f}  Predicted: {l_pred[i]:>10,.0f}")
-    print(f"R-squared: {r2_score(y_test, y_pred):.2f}")
-    print(f"MAE      : {mean_absolute_error(y_test, y_pred):.0f}")
+    print(f"Model1, R-squared: {r2_score(y_test, y_pred):.2f}")
+    print(f"Model1, MAE      : {mean_absolute_error(y_test, y_pred):.0f}")
 
 def predict_price(x, y, m2:int,house_type, standard) -> float:
     # Build a single sample

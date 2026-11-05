@@ -26,8 +26,8 @@ if os.path.exists(file_path) and os.path.getsize(file_path) > 0:
     # Test the model and gv R^2 and MAE scores
     y_pred = model.predict(X)
     
-    print(f"R-squared: {r2_score(y, y_pred):.2f}")
-    print(f"MAE      : {mean_absolute_error(y, y_pred):.0f}")
+    print(f"Model2, R-squared: {r2_score(y, y_pred):.2f}")
+    print(f"Model2, MAE      : {mean_absolute_error(y, y_pred):.0f}")
 else:
     # If porblems with reading data 
     model = None
