@@ -59,7 +59,7 @@ df = pd.DataFrame({
     "sales_price": sales_price
 })
 
-df.to_csv("House_Prices.csv", index=False)
+df.to_csv("House_Prices.csv", index=False, header=False, mode='a')
 
 # print(df.head())
 print("CSV file 'House_Prices.csv' created successfully.")
